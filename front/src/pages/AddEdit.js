@@ -4,8 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-const AddEdit = () => { 
-  
+const AddEdit = (props) => { 
+  console.log(props);
   
     return (
 

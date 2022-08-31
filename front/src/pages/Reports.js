@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useHistory, useParams } from "react-router-dom";
 import { Button,Modal,Input } from 'react-bootstrap';
+import AddEdit from "./AddEdit";
 
 
 export const Reports = () => {
@@ -12,7 +13,13 @@ export const Reports = () => {
 };
 
 export const ReportsOne = () => {
+  const [showEdit, setShowEdit] = useState(false);
 
+  const handleCloseEdit = () => setShowEdit(false);
+
+  const handleShowEdit = () => setShowEdit(true);
+
+  const [selectedTeacher, setSelectedTeacher] = useState();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -51,7 +58,25 @@ const onSubmit = async (id) => {
   await axios.delete(`http://localhost:3001/api/teacher/delete-teacher/${id}`);
  // history.push("/");
 };
+const onEdit = async (teacher) => {
+  console.log(teacher);
+  //await axios.put(`http://localhost:3001/api/teacher/update-teacher}`,teacher);
+ // history.push("/");
+setSelectedTeacher(teacher);
+handleShowEdit()
 
+};
+
+const handleSumbitEdit = async () => {
+  console.log(selectedTeacher);
+  await axios.put(`http://localhost:3001/api/teacher/update-teacher}`,selectedTeacher).then((data)=>{console.log(data)
+  handleCloseEdit();
+  setSelectedTeacher({});
+  }).catch((err)=> console.log(err));
+ // history.push("/");
+
+
+};
 const getAllTeachers = async () => {
   const response = await axios.get(
     "http://localhost:3001/api/teacher/get-all-teachers"
@@ -114,7 +139,7 @@ return (
               <td>{item.state}</td>
                           <td>
                              <a href="#" class="view" title="View" data-toggle="tooltip" style={{color:"#10ab80"}}><i class="material-icons">&#xE417;</i></a>
-                              <a href="EditTeacher"  class="AddEdit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                              <a  onClick={()=>onEdit(item)}  title="Edit" ><i class="material-icons">&#xE254;</i></a>
                               <a onClick={onSubmit} href=" onSubmit" class="delete" title="Delete" data-toggle="tooltip" style={{color:"red"}}><i class="material-icons">&#xE872;</i></a>
                                
                           </td>
@@ -158,7 +183,7 @@ return (
                   <input type="text" class="form-control"     name="state" onChange={e => onInputChange(e)} value={state} placeholder=" Enter State"/>
               </div>
               
-                <button type="submit" class="btn btn-success mt-4" onClick={handleSumbit}>Add Record</button>
+                <button type="submit" class="btn btn-success mt-4" onClick={handleSumbit}>Add Teacher</button>
               </form>
           </Modal.Body>
 
@@ -169,7 +194,47 @@ return (
         
       </Modal.Footer>
     </Modal>
+    <Modal
+      show={showEdit}
+      onHide={handleCloseEdit}
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Add Record</Modal.Title>
+      </Modal.Header>
+          <Modal.Body>
+          <form>
+              <div class="form-group">
+                  <input type="text" class="form-control"     name="first_name"   value={selectedTeacher?.first_name}  onChange={e => onInputChange(e)} placeholder="Enter Name"/>
+              </div>
+              <div class="form-group mt-3">
+                  <input type="text" class="form-control"     name="last_name"   value={selectedTeacher?.last_name} onChange={e => onInputChange(e)} placeholder="Enter Last Name"/>
+              </div>
+              <div class="form-group mt-3">
+                  <input type="text" class="form-control"     name="phone"   value={selectedTeacher?.phone} onChange={e => onInputChange(e)} placeholder="Enter Phone"/>
+              </div>
+              <div class="form-group mt-3">
+                  <input type="text" class="form-control"     name="email"  onChange={e => onInputChange(e)} value={selectedTeacher?.email} placeholder="Enter Email"/>
+              </div>
+              <div class="form-group mt-3">
+                  <input type="text" class="form-control"     name="gender"  onChange={e => onInputChange(e)} value={selectedTeacher?.gender}  placeholder="Enter Gender"/>
+              </div>
+              <div class="form-group mt-3">
+                  <input type="text" class="form-control"     name="state" onChange={e => onInputChange(e)} value={selectedTeacher?.state} placeholder=" Enter State"/>
+              </div>
+              
+                <button type="submit" class="btn btn-success mt-4" onClick={handleSumbitEdit}>update Teacher</button>
+              </form>
+          </Modal.Body>
 
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleCloseEdit}>
+          Close
+        </Button>
+        
+      </Modal.Footer>
+    </Modal>
      {/* Model Box Finsihs */}
      </div>  
     </div>    
@@ -191,11 +256,12 @@ return (
 
 export const ReportsTwo = () => {
   
+
+  const [data, setData] = useState([]);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const [data, setData] = useState([]);
    const [changed, setChanged] = useState(false);
         let history = useHistory();
         const { id } = useParams(); 
