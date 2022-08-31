@@ -1,0 +1,92 @@
+.App {
+  width:100vh;
+  height:100vh;
+
+
+}
+.App-header {
+  background-color: #282c34;
+  width:100vh;
+  height:100vh;
+
+
+}
+
+.App-link {
+  color: #16191a;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.container, .container-fluid {
+  margin-top: 20px;
+} 
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+}
+.Sidebar {
+  height: 100%;
+  width: 250px;
+ 
+  background-color: #53565e;
+  }
+  
+ 
+  
+  .body-text {
+  margin-right: 150px;
+  font-size: 18px;
+  }
+  .SidebarList
+{
+  height: auto;
+  padding: 0;
+  width: 100%;
+
+}
+.SidebarList .row{
+  width: 100%;
+  height: 60px;
+  border: 1px solid black;
+  list-style-type: none;
+  margin: 0%;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.row #icon{
+  flex: 30%;
+  display: grid;
+  place-items: center;
+}
+.row #title{
+  flex:70%
+}
+.home
+.AddClasse,
+.reports,
+.products,
+.team,
+.reports {
+  display: flex;
+  height: 60vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
